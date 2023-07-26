@@ -14,36 +14,42 @@ import java.util.List;
 @Data @AllArgsConstructor @NoArgsConstructor
 @Table(name = "utilisateur")
 public class Utilisateur {
-
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUser;
 
+    //====================== Pour le nom =========================
     @Column(name = "nom")
     @NotNull(message = "Remplissez les champs vides")
     @Size(max = 50, message = "Texte trop long")
     private String nom;
 
+    //====================== Pour le prenom =========================
     @Column(name = "prenom")
     @NotNull(message = "Remplissez les champs vides")
     @Size(max = 50, message = "Texte trop long")
-    private String prenon;
+    private String prenom;
 
+    //====================== Pour l'email =========================
     @Column(name = "email")
     @NotNull(message = "Remplissez les champs vides")
     @Size(max = 100, message = "Texte trop long")
     @Email(message = "Entrez un email valide !")
     private String email;
 
+
+    //====================== Pour le username =========================
     @Column(name = "username")
     @NotNull(message = "Remplissez les champs vides")
     @Size(max = 50, message = "Texte trop long")
     private String username;
 
+    //====================== Pour le mot de passe =========================
     @Column(name = "password")
     @NotNull(message = "Remplissez les champs vides")
     @Size(max = 50, message = "Texte trop long")
     private String password;
 
+    //====================== Pour les relations JPA =========================
     @OneToMany(mappedBy = "utilisateurQuiz")
     private List<Quiz> quizUser;
 

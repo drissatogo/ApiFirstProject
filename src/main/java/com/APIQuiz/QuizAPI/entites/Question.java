@@ -11,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
+@Table(name = "QUESTION")
 public class Question {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idQuestion;
@@ -20,6 +21,7 @@ public class Question {
     @Size(max = 100, message = "Texte trop long")
     private String texte;
 
+    //====================== Pour les relations JPA =========================
     @ManyToOne
     private Utilisateur utilisateurQuestion;
 
