@@ -15,7 +15,7 @@ public class Participation {
 
     @Column(name = "score")
     @NotNull(message = "Remplissez les champs vides")
-    @Max(value = 500, message = "Vous ne pouvez pas depasser 500 points")
+    @Max(value = 400, message = "Vous ne pouvez pas depasser 400 points")
     private int score;
 
     @ManyToOne
