@@ -30,7 +30,7 @@ public class Utilisateur {
 
     @Column(name = "email")
     @NotNull(message = "Remplissez les champs vides")
-    @Size(max = 100, message = "Texte trop long")
+    @Size(max = 50, message = "Texte trop long")
     @Email(message = "Entrez un email valide !")
     private String email;
 
