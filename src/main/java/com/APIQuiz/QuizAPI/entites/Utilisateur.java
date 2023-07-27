@@ -1,5 +1,6 @@
 package com.APIQuiz.QuizAPI.entites;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -45,15 +46,19 @@ public class Utilisateur {
     private String password;
 
     @OneToMany(mappedBy = "utilisateurQuiz")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)  // autorise l'insertion seulement en format JSON
     private List<Quiz> quizUser;
 
     @OneToMany(mappedBy = "utilisateurQuestion")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)  // autorise l'insertion seulement en format JSON
     private List<Question> questionUser;
 
     @OneToMany(mappedBy = "utilisateurReponse")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)  // autorise l'insertion seulement en format JSON
     private List<Reponse> reponseUser;
 
     @OneToMany(mappedBy = "utilisateurParticipation")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)  // autorise l'insertion seulement en format JSON
     private List<Participation> participationUser;
 
 
