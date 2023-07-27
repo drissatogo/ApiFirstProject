@@ -3,12 +3,14 @@ package com.APIQuiz.QuizAPI.services;
 import com.APIQuiz.QuizAPI.entites.Reponse;
 import com.APIQuiz.QuizAPI.repository.ReponseRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 @Service
 public class ReponseServiceImpl implements IReponseService{
 
+    @Autowired
     private ReponseRepository reponseRepository;    //injection
 
     @Override

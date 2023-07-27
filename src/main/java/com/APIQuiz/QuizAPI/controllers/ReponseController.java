@@ -6,6 +6,7 @@ import com.APIQuiz.QuizAPI.services.IUtilisateurService;
 import com.APIQuiz.QuizAPI.services.ReponseServiceImpl;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,9 +16,10 @@ import org.springframework.web.bind.annotation.*;
 public class ReponseController {
 
 
+    @Autowired
     private ReponseServiceImpl reponseService;
 
-    @GetMapping("/{id}")
+    @GetMapping("/afficherReponse/{idReponse}")
     public ResponseEntity<Reponse> getReponseById(@PathVariable Long idReponse) {
         Reponse reponse = reponseService.getReponseById(idReponse);
         if (reponse != null) {
@@ -33,8 +35,8 @@ public class ReponseController {
         return ResponseEntity.ok(nouvelleReponse);
     }
 
-    @PutMapping("/modifierReponse")
-    public ResponseEntity<Reponse> modifierReponse(@PathVariable Long idReponse, @RequestParam String text) {
+    @PutMapping("/modifierReponse/{idReponse}")
+    public ResponseEntity<Reponse> modifierReponse(@PathVariable Long idReponse, @RequestParam("text") String text) {
         Reponse reponseModifiee = reponseService.modifierReponse(idReponse, text);
         if (reponseModifiee != null) {
             return ResponseEntity.ok(reponseModifiee);
@@ -43,7 +45,7 @@ public class ReponseController {
         }
     }
 
-    @DeleteMapping("/supprimerReponse")
+    @DeleteMapping("/supprimerReponse/{idReponse}")
     public ResponseEntity<Void> supprimerReponse(@PathVariable Long idReponse) {
         reponseService.supprimerReponse(idReponse);
         return ResponseEntity.noContent().build();
