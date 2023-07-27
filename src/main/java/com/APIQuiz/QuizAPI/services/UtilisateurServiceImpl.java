@@ -43,7 +43,7 @@ public class UtilisateurServiceImpl implements IUtilisateurService{
 
     @Override
     public Utilisateur afficherParId(Long id) {
-        return null;
+        return utilisateurRepository.findById(id).get();
     }
 
     @Override
