@@ -1,5 +1,6 @@
 package com.APIQuiz.QuizAPI.entites;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -29,9 +30,11 @@ public class Quiz {
     private Utilisateur utilisateurQuiz;
 
     @OneToMany(mappedBy = "quizParticipation")
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)  // autorise l'insertion seulement en format JSON
     private List<Participation> participationQuiz;
 
     @OneToMany(mappedBy = "quizQuestion")
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)  // autorise l'insertion seulement en format JSON
     private List<Question> questionQuiz;
 
 }
