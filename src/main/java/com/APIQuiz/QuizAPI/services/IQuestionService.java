@@ -10,5 +10,5 @@ public interface IQuestionService {
     List<Question> afficherQuestion();
     List<Question> afficherParUser(Long idUser);
     Question afficherParQuestion(Long idQuestion);
-    Question supprimerQuestion(Long idQuestion);
+    String supprimerQuestion(Long idQuestion);
 }

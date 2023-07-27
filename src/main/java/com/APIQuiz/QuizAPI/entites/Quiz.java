@@ -1,5 +1,7 @@
 package com.APIQuiz.QuizAPI.entites;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -26,12 +28,15 @@ public class Quiz {
     private String domaine;
 
     @ManyToOne
+    @JsonIgnoreProperties(value = {"quizUser","participationUser","questionUser"})
     private Utilisateur utilisateurQuiz;
 
     @OneToMany(mappedBy = "quizParticipation")
+    @JsonIgnoreProperties(value = {"quizParticipation","utilisateurParticipation"})
     private List<Participation> participationQuiz;
 
     @OneToMany(mappedBy = "quizQuestion")
+    @JsonIgnoreProperties(value = {"quizQuestion","questionQuiz"})
     private List<Question> questionQuiz;
 
 }

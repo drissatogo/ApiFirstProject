@@ -5,12 +5,15 @@ import com.APIQuiz.QuizAPI.repository.ParticipationRepository;
 import com.APIQuiz.QuizAPI.repository.QuestionRepository;
 import com.APIQuiz.QuizAPI.repository.QuizRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 @AllArgsConstructor
 public class QuestionServiceImpl implements IQuestionService{
 
+    @Autowired
     private QuestionRepository questionRepository;    //injection
 
     @Override
@@ -38,7 +41,8 @@ public class QuestionServiceImpl implements IQuestionService{
     }
 
     @Override
-    public Question supprimerQuestion(Long idQuestion) {
-        return questionRepository.findByIdQuestion(idQuestion);
+    public String supprimerQuestion(Long idQuestion) {
+        questionRepository.deleteByIdQuestion(idQuestion);
+        return "Question supprimée";
     }
 }
