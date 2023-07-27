@@ -31,10 +31,8 @@ public class Reponse {
     private int point;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = {"reponseUser","questionUser","quizUser","participationUser"})
     private Utilisateur utilisateurReponse;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = {"reponseQuestion","utilisateurQuestion","quizQuestion"})
     private Question questionReponse;
 }

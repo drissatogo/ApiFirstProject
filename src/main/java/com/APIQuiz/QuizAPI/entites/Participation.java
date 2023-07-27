@@ -21,10 +21,8 @@ public class Participation {
     private int score;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = {"participationUser"})
     private Utilisateur utilisateurParticipation;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = {"participationQuiz","questionQuiz"})
     private Quiz quizParticipation;
 }
