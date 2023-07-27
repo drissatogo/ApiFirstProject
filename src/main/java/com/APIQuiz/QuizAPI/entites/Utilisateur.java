@@ -1,7 +1,6 @@
 package com.APIQuiz.QuizAPI.entites;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -54,21 +53,6 @@ public class Utilisateur {
 
     //====================== Pour les relations JPA =========================
     @OneToMany(mappedBy = "utilisateurQuiz")
-
-    @JsonIgnoreProperties(value = {"utilisateurQuiz","questionQuiz"})
-    private List<Quiz> quizUser;
-
-    @OneToMany(mappedBy = "utilisateurQuestion")
-    @JsonIgnoreProperties(value = {"utilisateurQuestion","quizQuestion"})
-    private List<Question> questionUser;
-
-    @OneToMany(mappedBy = "utilisateurReponse")
-    @JsonIgnoreProperties(value = {"utilisateurReponse"})
-    private List<Reponse> reponseUser;
-
-    @OneToMany(mappedBy = "utilisateurParticipation")
-    @JsonIgnoreProperties(value = {"utilisateurParticipation"})
-
     @JsonIgnore
     private List<Quiz> quizUser;
 
@@ -83,5 +67,6 @@ public class Utilisateur {
     @OneToMany(mappedBy = "utilisateurParticipation")
     @JsonIgnore
     private List<Participation> participationUser;
+
 
 }

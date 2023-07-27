@@ -33,11 +33,6 @@ public class Quiz {
     private Utilisateur utilisateurQuiz;
 
     @OneToMany(mappedBy = "quizParticipation")
-    @JsonIgnoreProperties(value = {"quizParticipation","utilisateurParticipation"})
-    private List<Participation> participationQuiz;
-
-    @OneToMany(mappedBy = "quizQuestion")
-    @JsonIgnoreProperties(value = {"quizQuestion","questionQuiz"})
     @JsonProperty(access = JsonProperty.Access.READ_WRITE)  // autorise l'insertion seulement en format JSON
     private List<Participation> participationQuiz;
 
