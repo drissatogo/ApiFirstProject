@@ -69,7 +69,7 @@ public class Utilisateur {
     @OneToMany(mappedBy = "utilisateurParticipation")
     @JsonIgnoreProperties(value = {"utilisateurParticipation"})
 
-   /* @JsonIgnore
+    @JsonIgnore
     private List<Quiz> quizUser;
 
     @OneToMany(mappedBy = "utilisateurQuestion")
@@ -83,6 +83,5 @@ public class Utilisateur {
     @OneToMany(mappedBy = "utilisateurParticipation")
     @JsonIgnore
     private List<Participation> participationUser;
-*/
 
 }
