@@ -52,19 +52,19 @@ public class Utilisateur {
 
     //====================== Pour les relations JPA =========================
 
-    @OneToMany(mappedBy = "utilisateurQuiz")
+    @OneToMany(mappedBy = "utilisateurQuiz",orphanRemoval = true)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Quiz> quizUser;
 
-    @OneToMany(mappedBy = "utilisateurQuestion")
+    @OneToMany(mappedBy = "utilisateurQuestion",orphanRemoval = true)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Question> questionUser;
 
-    @OneToMany(mappedBy = "utilisateurReponse")
+    @OneToMany(mappedBy = "utilisateurReponse",orphanRemoval = true)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Reponse> reponseUser;
 
-    @OneToMany(mappedBy = "utilisateurParticipation")
+    @OneToMany(mappedBy = "utilisateurParticipation",orphanRemoval = true)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Participation> participationUser;
 

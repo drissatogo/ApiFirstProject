@@ -7,9 +7,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
+@RequestMapping("/participation")
 @AllArgsConstructor
 public class ParticipationController {
 
@@ -18,13 +20,9 @@ public class ParticipationController {
     //    endpoint: ajouter Quiz
     @PostMapping("/ajouterPart")
     private String ajouter(@Valid @RequestBody Participation participation){
-        if (participation!=null){
             participationService.ajouter(participation);
             return "Participant ajouter";
-        }else {
-            return "Remplisser les champs vide";
         }
-    }
 
     //    endpoint: afficher toute la liste
     @GetMapping("/listeAllParticipant")
@@ -35,7 +33,6 @@ public class ParticipationController {
     //    enpoint: afficher liste par id
     @GetMapping("/listeIdPart")
     private ResponseEntity<Participation> quizIdList(@Valid @RequestParam Long idPart){
-        if (idPart==null) throw new RuntimeException("Remplissez les champs vite");
         Participation participant = participationService.afficherParId(idPart);
         return ResponseEntity.ok(participant);
     }
@@ -43,15 +40,19 @@ public class ParticipationController {
     //    enpoint: modifier participation
     @PutMapping("/modifierPart")
     private Participation modifier(@Valid @RequestBody Participation participation){
-        if (participation==null) throw new RuntimeException("Remplissez les champs vite");
         return participationService.modifier(participation);
     }
 
     //    endpoint: supprimer Participation
     @DeleteMapping("/supprimerPart")
     private String supprimer(@Valid @RequestParam Long idParticipation){
-        if (idParticipation==null) throw new RuntimeException("Choisissez un quiz");
         participationService.supprimer(idParticipation);
         return "Participation supprimer avec succes";
     }
+
+    @GetMapping("/commencer")
+    private HashMap<String,String> jouer(@RequestParam("username") String username, @RequestParam("titre") String titre){
+        return participationService.resultat(username,titre);
+    }
+
 }

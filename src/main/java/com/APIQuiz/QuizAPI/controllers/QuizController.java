@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("quiz")
 public class QuizController {
 
     private IQuizService quizService;
@@ -35,7 +36,6 @@ public class QuizController {
     //    enpoint: afficher liste par id
     @GetMapping("/listeIdQuiz")
     private ResponseEntity<Quiz> quizIdList(@Valid @RequestParam Long idQuiz){
-        if (idQuiz==null) throw new RuntimeException("Remplissez les champs vite");
         Quiz quiz = quizService.afficherParId(idQuiz);
         return ResponseEntity.ok(quiz);
     }
@@ -43,14 +43,12 @@ public class QuizController {
     //    enpoint: modifier Quiz
     @PutMapping("/modifierQuiz")
     private Quiz modifier(@Valid @RequestBody Quiz quiz){
-        if (quiz==null) throw new RuntimeException("Remplissez les champs vite");
         return quizService.modifier(quiz);
     }
 
     //    endpoint: supprimer Utilisateur
     @DeleteMapping("/supprimerQuiz")
     private String supprimer(@Valid @RequestParam Long idQuiz){
-        if (idQuiz==null) throw new RuntimeException("Choisissez un quiz");
         quizService.supprimer(idQuiz);
         return "Quiz supprimer avec succes";
     }

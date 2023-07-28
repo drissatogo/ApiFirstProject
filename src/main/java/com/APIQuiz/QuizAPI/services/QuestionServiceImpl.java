@@ -35,14 +35,19 @@ public class QuestionServiceImpl implements IQuestionService{
         return questionRepository.findByUtilisateurQuestionIdUser(idUser);
     }
 
-    public Question afficherParQuestion(Long idQuestion){
-        return questionRepository.findByIdQuestion(idQuestion);
-
-    }
+//    public Question afficherParQuestion(Long idQuestion){
+//        return questionRepository.findById(idQuestion).get();
+//
+//    }
 
     @Override
     public String supprimerQuestion(Long idQuestion) {
-        questionRepository.deleteByIdQuestion(idQuestion);
+        questionRepository.deleteById(idQuestion);
         return "Question supprimée";
+    }
+
+    @Override
+    public Question listParId(Long idQuestion) {
+        return questionRepository.findById(idQuestion).get();
     }
 }

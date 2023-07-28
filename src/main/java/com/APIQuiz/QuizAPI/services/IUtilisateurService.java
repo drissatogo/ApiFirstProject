@@ -2,6 +2,7 @@ package com.APIQuiz.QuizAPI.services;
 
 import com.APIQuiz.QuizAPI.entites.Utilisateur;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface IUtilisateurService {
@@ -12,5 +13,6 @@ public interface IUtilisateurService {
     Utilisateur afficherParId(Long id);     //  recuperer user par  id
     void supprimer(Long idUser);    // suppression de user
     Utilisateur modifier(Utilisateur iduser);       //  modifier
+
 
 }

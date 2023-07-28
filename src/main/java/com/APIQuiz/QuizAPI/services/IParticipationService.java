@@ -2,6 +2,7 @@ package com.APIQuiz.QuizAPI.services;
 
 import com.APIQuiz.QuizAPI.entites.Participation;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface IParticipationService {
@@ -10,4 +11,6 @@ public interface IParticipationService {
     Participation afficherParId(Long idParticipation);     //  recuperer user par  id
     void supprimer(Long idParticipation);    // suppression de user
     Participation modifier(Participation participation);       //  modifier
+
+    HashMap<String,String> resultat(String username,String titre);
 }

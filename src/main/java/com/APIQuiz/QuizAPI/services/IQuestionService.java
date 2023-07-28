@@ -9,6 +9,8 @@ public interface IQuestionService {
     Question modifierQuestion(Question question);
     List<Question> afficherQuestion();
     List<Question> afficherParUser(Long idUser);
-    Question afficherParQuestion(Long idQuestion);
+//    Question afficherParQuestion(Long idQuestion);
     String supprimerQuestion(Long idQuestion);
+
+    Question listParId(Long idQuestion);
 }

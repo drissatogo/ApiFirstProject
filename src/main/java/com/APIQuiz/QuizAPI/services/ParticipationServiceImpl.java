@@ -2,9 +2,12 @@ package com.APIQuiz.QuizAPI.services;
 
 import com.APIQuiz.QuizAPI.entites.Participation;
 import com.APIQuiz.QuizAPI.repository.ParticipationRepository;
+import com.APIQuiz.QuizAPI.repository.QuizRepository;
+import com.APIQuiz.QuizAPI.repository.UtilisateurRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -12,6 +15,8 @@ import java.util.List;
 public class ParticipationServiceImpl implements IParticipationService{
 
     private ParticipationRepository participationRepository;    //injection
+    private UtilisateurRepository utilisateurRepository;
+    private QuizRepository quizRepository;
 
 
     @Override
@@ -49,5 +54,18 @@ public class ParticipationServiceImpl implements IParticipationService{
         }else {
             return participationRepository.save(participation);
         }
+    }
+
+    @Override
+    public HashMap<String,String> resultat(String username, String titre) {
+        Participation resultat = participationRepository.findByUtilisateurParticipationAndQuizParticipation(
+                utilisateurRepository.findByUsername(username),
+                quizRepository.findByTitre(titre)
+        );
+        HashMap<String,String> hashMap = new HashMap<>();
+        hashMap.put("username",resultat.getUtilisateurParticipation().getUsername());
+        hashMap.put("titre",resultat.getQuizParticipation().getTitre());
+        hashMap.put("score",resultat.getScore()+"");
+        return hashMap;
     }
 }

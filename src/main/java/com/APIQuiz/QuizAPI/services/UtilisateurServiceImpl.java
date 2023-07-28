@@ -48,11 +48,7 @@ public class UtilisateurServiceImpl implements IUtilisateurService{
 
     @Override
     public void supprimer(Long idUser) {
-        if (idUser==null){
-            throw new RuntimeException("Remplissez les champs vides");
-        }else {
-            utilisateurRepository.deleteById(idUser);
-        }
+        utilisateurRepository.deleteById(idUser);
     }
 
     @Override
