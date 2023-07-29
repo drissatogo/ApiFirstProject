@@ -30,6 +30,7 @@ public class Reponse {
     @Max(value = 50, message = "Vous ne pouvez pas depasser 50 points")
     private int point;
 
+    //=========================== Les rélations JPA ==============================
     @ManyToOne
     @JsonIgnoreProperties(value = {"reponseUser","questionUser","quizUser","participationUser"})
     private Utilisateur utilisateurReponse;

@@ -13,16 +13,21 @@ public class ReponseServiceImpl implements IReponseService{
     @Autowired
     private ReponseRepository reponseRepository;    //injection
 
+
+    //===================== Liste des réponses par l'Id ============================
     @Override
     public Reponse getReponseById(Long id) {
         return reponseRepository.findById(id).orElse(null);
     }
 
+    //===================== Création de réponse ============================
     @Override
     public Reponse creerReponse(Reponse reponse) {
         return reponseRepository.save(reponse);
     }
 
+
+    //===================== Modifier une réponse ============================
     @Override
     public Reponse modifierReponse(Long idReponse, String text) {
         Reponse reponse = reponseRepository.findById(idReponse).orElse(null);
@@ -32,7 +37,7 @@ public class ReponseServiceImpl implements IReponseService{
         }
         return null;
     }
-
+    //===================== Supprimer une réponse ============================
     @Override
     public void supprimerReponse(Long id) {
         reponseRepository.deleteById(id);
