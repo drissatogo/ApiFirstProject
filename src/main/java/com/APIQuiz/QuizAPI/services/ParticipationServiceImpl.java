@@ -148,7 +148,7 @@ public class ParticipationServiceImpl implements IParticipationService{
                 listReponse.add(question.getTexte());
                 listReponse.add("<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>");
                 question.getReponseQuestion().forEach(reponse1 -> {
-                    listReponse.add(listReponse.size()-4 + " : " +reponse.getTexte());
+                    listReponse.add(listReponse.size()-4 + " : " +reponse1.getTexte());
                 });
                 return listReponse;
             }else {
