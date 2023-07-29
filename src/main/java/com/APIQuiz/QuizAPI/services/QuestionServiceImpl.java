@@ -31,14 +31,19 @@ public class QuestionServiceImpl implements IQuestionService{
         return questionRepository.findAll();
     }
 
-    public List<Question> afficherParUser(Long idUser){
-        return questionRepository.findByUtilisateurQuestionIdUser(idUser);
+    public Question afficherParId(Long idQuestion){
+        return questionRepository.findById(idQuestion).get();
     }
 
-//    public Question afficherParQuestion(Long idQuestion){
-//        return questionRepository.findById(idQuestion).get();
-//
-//    }
+    public Question afficherParQuestion(Long idQuestion){
+        return null; //questionRepository.findByIdQuestion(idQuestion);
+
+    }
+
+    @Override
+    public List<Question> afficherParUser(Long idUser) {
+        return null;
+    }
 
     @Override
     public String supprimerQuestion(Long idQuestion) {
@@ -48,6 +53,6 @@ public class QuestionServiceImpl implements IQuestionService{
 
     @Override
     public Question listParId(Long idQuestion) {
-        return questionRepository.findById(idQuestion).get();
+        return null;
     }
 }

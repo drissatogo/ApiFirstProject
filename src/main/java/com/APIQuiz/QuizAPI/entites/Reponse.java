@@ -23,7 +23,7 @@ public class Reponse {
     @Column(name = "status")
     @NotNull(message = "Remplissez les champs vides")
     @Size(max = 50, message = "Texte trop long")
-    private String status;
+    private String bonneReponse;
 
     @Column(name = "point")
     @NotNull(message = "Remplissez les champs vides")

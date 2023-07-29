@@ -1,6 +1,7 @@
 package com.APIQuiz.QuizAPI.controllers;
 
 import com.APIQuiz.QuizAPI.entites.Participation;
+import com.APIQuiz.QuizAPI.entites.Question;
 import com.APIQuiz.QuizAPI.services.IParticipationService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.List;
 public class ParticipationController {
 
     private IParticipationService participationService;
+
 
     //    endpoint: ajouter Quiz
     @PostMapping("/ajouterPart")
@@ -48,6 +50,20 @@ public class ParticipationController {
     private String supprimer(@Valid @RequestParam Long idParticipation){
         participationService.supprimer(idParticipation);
         return "Participation supprimer avec succes";
+    }
+
+    @GetMapping("/")
+    private List<String> afficherQuestion(){
+        return participationService.recupererListQuiz();
+    }
+
+    @GetMapping("/{idUser}/{idQuiz}/play")
+    private List<String> afficher(@PathVariable Long idUser,@PathVariable Long idQuiz,@RequestParam(value = "choix",required = false) Integer choix){
+        if (choix==null){
+            return participationService.commencer(idUser,idQuiz);
+        }else {
+            return participationService.verificationDesReponse(idUser,idQuiz,choix);
+        }
     }
 
     @GetMapping("/commencer")

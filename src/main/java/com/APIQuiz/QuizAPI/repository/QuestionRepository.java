@@ -9,10 +9,14 @@ import java.util.List;
 
 @Repository
 public interface QuestionRepository extends JpaRepository<Question,Long> {
+
+//    List<Question> findByUtilisateurQuestionIdUser(Long idUser);
+
     List<Question> findByUtilisateurQuestionIdUser(Long idUser);
+
 //    Question findByIdQuestion(Long idQuestion);
 
-    void deleteByIdQuestion(Long idQuestion);
+//    void deleteByIdQuestion(Long idQuestion);
 
 
 }
