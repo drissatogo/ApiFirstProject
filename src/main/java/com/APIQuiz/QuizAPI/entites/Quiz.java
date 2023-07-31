@@ -1,6 +1,6 @@
 package com.APIQuiz.QuizAPI.entites;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -29,18 +29,14 @@ public class Quiz {
     private String domaine;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = {"quizUser","participationUser","questionUser"})
     private Utilisateur utilisateurQuiz;
 
     @OneToMany(mappedBy = "quizParticipation")
-    //@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-    // autorise l'insertion seulement en format JSON
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Participation> participationQuiz;
 
     @OneToMany(mappedBy = "quizQuestion")
-    //@JsonProperty(access = JsonProperty.Access.READ_WRITE)  // autorise l'insertion seulement en format JSON
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)  // autorise l'insertion seulement en format JSON
     private List<Question> questionQuiz;
 
 }

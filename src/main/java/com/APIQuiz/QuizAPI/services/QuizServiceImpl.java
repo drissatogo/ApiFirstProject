@@ -46,10 +46,6 @@ public class QuizServiceImpl implements IQuizService{
 
     @Override
     public Quiz modifier(Quiz quiz) {
-        if (quiz==null){
-            throw new RuntimeException("Remplissez les champs vides");
-        }else {
-            return quizRepository.save(quiz);
-        }
+        return quizRepository.save(quiz);
     }
 }

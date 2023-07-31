@@ -8,13 +8,16 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/question")
 @AllArgsConstructor
 @Transactional
 public class QuestionController {
@@ -48,6 +51,13 @@ public class QuestionController {
     public List<Question> listeQuestion(){
         return questionService.afficherQuestion();
     }
+
+    @GetMapping("/listeParId")
+    private ResponseEntity<Question> afficherQuestionParId(@Valid @RequestParam Long idQuestion){
+        Question question = questionService.listParId(idQuestion);
+        return ResponseEntity.ok(question);
+    }
+
     @DeleteMapping("/delete")
     @Operation(summary = "Supprimer des questions ")
     @ApiResponse(responseCode = "200", description = "Question supprimée avec succès",

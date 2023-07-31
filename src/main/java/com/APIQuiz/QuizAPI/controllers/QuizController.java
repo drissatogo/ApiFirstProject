@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("quiz")
 public class QuizController {
 
     private IQuizService quizService;
@@ -49,7 +50,6 @@ public class QuizController {
     @ApiResponse(responseCode = "404", description = "Liste non trouvée")
 
     private ResponseEntity<Quiz> quizIdList(@Valid @RequestParam Long idQuiz){
-        if (idQuiz==null) throw new RuntimeException("Remplissez les champs vite");
         Quiz quiz = quizService.afficherParId(idQuiz);
         return ResponseEntity.ok(quiz);
     }
@@ -62,7 +62,6 @@ public class QuizController {
     @PutMapping("/modifierQuiz")
 
     private Quiz modifier(@Valid @RequestBody Quiz quiz){
-        if (quiz==null) throw new RuntimeException("Remplissez les champs vite");
         return quizService.modifier(quiz);
     }
 
@@ -74,7 +73,6 @@ public class QuizController {
     @ApiResponse(responseCode = "404", description = "Quiz non supprimé")
 
     private String supprimer(@Valid @RequestParam Long idQuiz){
-        if (idQuiz==null) throw new RuntimeException("Choisissez un quiz");
         quizService.supprimer(idQuiz);
         return "Quiz supprimé avec succes";
     }

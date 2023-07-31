@@ -1,21 +1,23 @@
 package com.APIQuiz.QuizAPI.controllers;
-
-import com.APIQuiz.QuizAPI.entites.Quiz;
+import com.APIQuiz.QuizAPI.Erreur.MessageErreur;
+import com.APIQuiz.QuizAPI.Erreur.UserNotFoundException;
 import com.APIQuiz.QuizAPI.entites.Utilisateur;
-import com.APIQuiz.QuizAPI.repository.UtilisateurRepository;
 import com.APIQuiz.QuizAPI.services.IUtilisateurService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping(value = "/utilisateur")
 @AllArgsConstructor
 public class UtilisateurController {
 
@@ -27,14 +29,14 @@ public class UtilisateurController {
     @ApiResponse(responseCode = "200", description = "Utilisateur ajouté avec succès",
             content = @Content(schema = @Schema(implementation = Utilisateur.class)))
     @ApiResponse(responseCode = "404", description = "Utilisateur non ajouté")
-
-    private String inscrire(@Valid @RequestBody Utilisateur utilisateur){
-        if (utilisateur!=null){
+    private ResponseEntity inscrire(@Valid @RequestBody Utilisateur utilisateur){
+        //try{
             utilisateurService.inscrire(utilisateur);
-            return "Utilisateur ajouter";
-        }else {
-            return "Remplisser les champs vide";
-        }
+            return ResponseEntity.status(HttpStatus.CREATED).body(utilisateur);
+        //}catch (UserNotFoundException exception){
+            //return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageErreur("Utilisateur existe deja","Changer d'information"));
+        //}
+
     }
 
 //    endpoint: connecter Utilisateur
@@ -43,13 +45,9 @@ public class UtilisateurController {
         @ApiResponse(responseCode = "200", description = "Connecté avec succès",
                 content = @Content(schema = @Schema(implementation = Utilisateur.class)))
         @ApiResponse(responseCode = "404", description = "Erreur de connexion")
-
-        private String connecter(@RequestParam("username") String username, @RequestParam("password") String password){
-        if (username!=null && password!=null){
-           return utilisateurService.connexion(username,password)+"";
-        }else {
-            return "Remplisser les champs vides";
-        }
+        private String connecter(@RequestParam String username, @RequestParam String password){
+            utilisateurService.connexion(username,password);
+           return "Connexion reussit";
     }
 
 //    endpoint: afficher toute la liste
@@ -60,7 +58,7 @@ public class UtilisateurController {
     @ApiResponse(responseCode = "404", description = "Liste non trouvée")
 
     private List<Utilisateur> list(){
-        return utilisateurService.listeUser();
+        return utilisateurService.afficher();
     }
 
 //    enpoint: afficher liste par id
@@ -69,11 +67,8 @@ public class UtilisateurController {
     @ApiResponse(responseCode = "200", description = "Liste trouvé avec succès",
             content = @Content(schema = @Schema(implementation = Utilisateur.class)))
     @ApiResponse(responseCode = "404", description = "Liste non  trouvée")
-
-    private ResponseEntity<Utilisateur> userAllList(@Valid @RequestParam Long idUser){
-        if (idUser==null) throw new RuntimeException("Remplissez les champs vite");
-        Utilisateur user = utilisateurService.afficherParId(idUser);
-        return ResponseEntity.ok(user);
+    private Utilisateur userAllList(@RequestParam Long idUser) {
+           return utilisateurService.lire(idUser);
     }
 
 //    enpoint: modifier Utilisateur
@@ -84,7 +79,6 @@ public class UtilisateurController {
     @ApiResponse(responseCode = "404", description = "Utilisateur non modifié")
 
     private Utilisateur modifier(@Valid @RequestBody Utilisateur user){
-        if (user==null) throw new RuntimeException("Remplissez les champs vite");
         return utilisateurService.modifier(user);
     }
 
@@ -94,12 +88,8 @@ public class UtilisateurController {
     @ApiResponse(responseCode = "200", description = "Utilisateur supprimé avec succès",
             content = @Content(schema = @Schema(implementation = Utilisateur.class)))
     @ApiResponse(responseCode = "404", description = "Erreur de suppression")
-
-    private String supprimer(@Valid @RequestParam("idUser") Long idUser){
-        if (idUser==null) throw new RuntimeException("Choisissez un user");
+    private String supprimer(@Valid @RequestParam Long idUser){
         utilisateurService.supprimer(idUser);
-        return "User supprimer avec succes";
+        return "User supprimé avec succes";
     }
-
-
 }
