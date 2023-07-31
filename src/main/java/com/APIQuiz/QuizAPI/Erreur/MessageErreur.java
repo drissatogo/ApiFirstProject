@@ -1,7 +1,7 @@
 package com.APIQuiz.QuizAPI.Erreur;
 
 public record MessageErreur(
-        String code,
+        int code,
         String message
 ) {
 }

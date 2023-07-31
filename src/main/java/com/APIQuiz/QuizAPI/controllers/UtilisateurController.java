@@ -22,14 +22,8 @@ public class UtilisateurController {
 
 //    endpoint: Inscrire Utilisateur
     @PostMapping("/ajouter")
-    private ResponseEntity inscrire(@Valid @RequestBody Utilisateur utilisateur){
-        try {
-            utilisateurService.inscrire(utilisateur);
-            return ResponseEntity.status(HttpStatus.CREATED).body(utilisateur);
-        }catch (UserNotFoundException exception){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageErreur("Utilisateur existe deja","Changer d'information"));
-        }
-
+    private Utilisateur inscrire(@Valid @RequestBody Utilisateur utilisateur){
+          return utilisateurService.inscrire(utilisateur);
     }
 
 //    endpoint: connecter Utilisateur

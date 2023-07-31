@@ -15,7 +15,7 @@ public class ApplicationControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(EntityNotFoundException.class)
     public @ResponseBody MessageErreur handlerException(EntityNotFoundException exception){
-        return new MessageErreur("Identifiant incorrect","Verifier votre identifiant");
+        return new MessageErreur(HttpStatus.BAD_REQUEST.value(), exception.getMessage());
     }
 
 }

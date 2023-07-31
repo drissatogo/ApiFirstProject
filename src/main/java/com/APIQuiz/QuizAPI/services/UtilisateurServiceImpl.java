@@ -21,11 +21,11 @@ public class UtilisateurServiceImpl implements IUtilisateurService{
 
     @Override
     public Utilisateur inscrire(Utilisateur utilisateur) {
-        Utilisateur utilisateur1 = utilisateurRepository.save(utilisateur);
-        if (utilisateur1!=null){
-            throw new UserNotFoundException("Remplissez les champs vides");
+        Utilisateur utilisateurVerif = utilisateurRepository.findByUsername(utilisateur.getUsername());
+        if (utilisateurVerif == null){
+            return utilisateurRepository.save(utilisateur);
         }else {
-            return utilisateurRepository.save(utilisateur1);
+            throw new EntityNotFoundException("User existe deja !");
         }
     }
 
