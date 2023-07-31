@@ -17,14 +17,17 @@ public class Participation {
 
     @Column(name = "score")
     @NotNull(message = "Remplissez les champs vides")
-    @Max(value = 400, message = "Vous ne pouvez pas depasser 400 points")
+    @Max(value = 500, message = "Vous ne pouvez pas depasser 400 points")
     private int score;
 
+    @Column(name = "niveau")
+    @NotNull(message = "Remplisse les champs vides")
+    @Max(value = 50, message = "Vous ne pouvez pas depasser 50 niveau")
+    private int niveau;
+
     @ManyToOne
-    @JsonIgnoreProperties(value = {"participationUser"})
     private Utilisateur utilisateurParticipation;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = {"participationQuiz","questionQuiz"})
     private Quiz quizParticipation;
 }

@@ -23,7 +23,7 @@ public class Reponse {
     @Column(name = "status")
     @NotNull(message = "Remplissez les champs vides")
     @Size(max = 50, message = "Texte trop long")
-    private String status;
+    private String bonneReponse;
 
     @Column(name = "point")
     @NotNull(message = "Remplissez les champs vides")
@@ -31,10 +31,8 @@ public class Reponse {
     private int point;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = {"reponseUser","questionUser","quizUser","participationUser"})
     private Utilisateur utilisateurReponse;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = {"reponseQuestion","utilisateurQuestion","quizQuestion"})
     private Question questionReponse;
 }

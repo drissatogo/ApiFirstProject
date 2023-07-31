@@ -1,6 +1,9 @@
 package com.APIQuiz.QuizAPI.entites;
 
+<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonIgnore;
+=======
+>>>>>>> caecfff3070d3a8d3c6466b86e7dc3b4deefeabf
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -52,6 +55,7 @@ public class Utilisateur {
     private String password;
 
     //====================== Pour les relations JPA =========================
+<<<<<<< HEAD
     @OneToMany(mappedBy = "utilisateurQuiz")
     @JsonIgnore
     private List<Quiz> quizUser;
@@ -68,5 +72,35 @@ public class Utilisateur {
     @JsonIgnore
     private List<Participation> participationUser;
 
+=======
+
+    @OneToMany(mappedBy = "utilisateurQuiz",orphanRemoval = true)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Quiz> quizUser;
+
+    @OneToMany(mappedBy = "utilisateurQuestion",orphanRemoval = true)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Question> questionUser;
+
+    @OneToMany(mappedBy = "utilisateurReponse",orphanRemoval = true)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Reponse> reponseUser;
+
+    @OneToMany(mappedBy = "utilisateurParticipation",orphanRemoval = true)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Participation> participationUser;
+
+//    @OneToMany(mappedBy = "utilisateurParticipation")
+//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+//    private List<Quiz> quizUser;
+//
+//    @OneToMany(mappedBy = "utilisateurQuestion")
+//    @JsonIgnore
+//    private List<Question> questionUser;
+//
+//    @OneToMany(mappedBy = "utilisateurReponse")
+//    @JsonIgnore
+//    private List<Reponse> reponseUser;
+>>>>>>> caecfff3070d3a8d3c6466b86e7dc3b4deefeabf
 
 }

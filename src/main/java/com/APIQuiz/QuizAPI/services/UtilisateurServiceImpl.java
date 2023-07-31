@@ -1,12 +1,16 @@
 package com.APIQuiz.QuizAPI.services;
 
+import com.APIQuiz.QuizAPI.Erreur.MessageErreur;
+import com.APIQuiz.QuizAPI.Erreur.UserNotFoundException;
 import com.APIQuiz.QuizAPI.entites.Utilisateur;
 import com.APIQuiz.QuizAPI.repository.UtilisateurRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -17,11 +21,11 @@ public class UtilisateurServiceImpl implements IUtilisateurService{
 
     @Override
     public Utilisateur inscrire(Utilisateur utilisateur) {
-//        Utilisateur emailUser = utilisateurRepository.findByEmail(email);
-        if (utilisateur==null){
-            throw new RuntimeException("Information user incorrect");
+        Utilisateur utilisateur1 = utilisateurRepository.save(utilisateur);
+        if (utilisateur1!=null){
+            throw new UserNotFoundException("Remplissez les champs vides");
         }else {
-            return utilisateurRepository.save(utilisateur);
+            return utilisateurRepository.save(utilisateur1);
         }
     }
 
@@ -37,22 +41,21 @@ public class UtilisateurServiceImpl implements IUtilisateurService{
     }
 
     @Override
-    public List<Utilisateur> listeUser() {
+    public List<Utilisateur> afficher() {
         return utilisateurRepository.findAll();
     }
 
     @Override
-    public Utilisateur afficherParId(Long id) {
-        return utilisateurRepository.findById(id).get();
+    public Utilisateur lire(Long id) {
+        Optional<Utilisateur> utilisateur = utilisateurRepository.findById(id);
+        return utilisateur.orElseThrow(
+                ()-> new EntityNotFoundException("Aucun client n'existe avec cette identifiant")
+        );
     }
 
     @Override
     public void supprimer(Long idUser) {
-        if (idUser==null){
-            throw new RuntimeException("Remplissez les champs vides");
-        }else {
-            utilisateurRepository.deleteById(idUser);
-        }
+        utilisateurRepository.deleteById(idUser);
     }
 
     @Override
