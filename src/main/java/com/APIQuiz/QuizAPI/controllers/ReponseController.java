@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping
@@ -36,8 +38,12 @@ public class ReponseController {
     }
 
     @PutMapping("/modifierReponse/{idReponse}")
-    public ResponseEntity<Reponse> modifierReponse(@PathVariable Long idReponse, @RequestParam("text") String text) {
-        Reponse reponseModifiee = reponseService.modifierReponse(idReponse, text);
+    public ResponseEntity<Reponse> modifierReponse(@PathVariable Long idReponse,
+                                                   @RequestParam("texte") String text,
+                                                   @RequestParam("point") int point,
+                                                   @RequestParam("status") String status)
+    {
+        Reponse reponseModifiee = reponseService.modifierReponse(idReponse, text,point,status);
         if (reponseModifiee != null) {
             return ResponseEntity.ok(reponseModifiee);
         } else {
@@ -45,9 +51,23 @@ public class ReponseController {
         }
     }
 
+    @PatchMapping("/modifierUnElementReponse/{idReponse}")
+    public ResponseEntity<Reponse> modifierUnElementReponse(@PathVariable Long idReponse, @RequestBody Reponse reponse) {
+        Reponse reponseModifiee = reponseService.modifierUnElemntReponse(idReponse, reponse);
+        return ResponseEntity.ok(reponseModifiee);
+    }
+
+
+
     @DeleteMapping("/supprimerReponse/{idReponse}")
     public ResponseEntity<Void> supprimerReponse(@PathVariable Long idReponse) {
         reponseService.supprimerReponse(idReponse);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/afficherListeReponses")
+    public ResponseEntity<List<Reponse>> afficherListeReponses() {
+        List<Reponse> reponses = reponseService.afficherLesReponses();
+        return ResponseEntity.ok(reponses);
     }
 }
