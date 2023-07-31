@@ -1,6 +1,7 @@
 package com.APIQuiz.QuizAPI.entites;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -25,6 +26,7 @@ public class Participation {
     private Utilisateur utilisateurParticipation;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = {"participationQuiz","questionQuiz"})
+    //@JsonIgnoreProperties(value = {"participationQuiz","questionQuiz"})
+    @JsonIgnore
     private Quiz quizParticipation;
 }

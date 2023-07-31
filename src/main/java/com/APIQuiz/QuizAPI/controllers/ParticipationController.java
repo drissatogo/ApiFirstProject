@@ -80,4 +80,6 @@ public class ParticipationController {
         participationService.supprimer(idParticipation);
         return "Participation supprimé avec succes";
     }
+
+
 }
