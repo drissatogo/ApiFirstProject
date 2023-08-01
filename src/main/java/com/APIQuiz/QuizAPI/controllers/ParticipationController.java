@@ -58,7 +58,7 @@ public class ParticipationController {
     }
 
     @GetMapping("/{idUser}/{idQuiz}/play")
-    private List<String> afficherJeux(@PathVariable Long idUser,@PathVariable Long idQuiz,@RequestParam(value = "choix",required = false) Integer choix){
+    private List<String> afficheJeux(@PathVariable Long idUser,@PathVariable Long idQuiz,@RequestParam(value = "choix",required = false) Integer choix){
         if (choix==null){
             return participationService.commencer(idUser,idQuiz);
         }else {
