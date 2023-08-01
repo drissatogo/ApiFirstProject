@@ -45,7 +45,7 @@ public class ParticipationController {
         return "Participant modifier";
     }
 
-    //    endpoint: supprimer Participation
+    //    endpoint: supprimer Participations
     @DeleteMapping("/supprimerPart")
     private String supprimer(@RequestParam Long idParticipation){
         participationService.supprimer(idParticipation);
