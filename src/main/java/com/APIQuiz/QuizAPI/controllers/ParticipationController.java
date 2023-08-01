@@ -34,7 +34,7 @@ public class ParticipationController {
 
     //    enpoint: afficher liste par id
     @GetMapping("/listeIdPart")
-    private Participation quizIdList(@RequestParam Long idPart){
+    private Participation quizIdListe(@RequestParam Long idPart){
         return participationService.lire(idPart);
     }
 
