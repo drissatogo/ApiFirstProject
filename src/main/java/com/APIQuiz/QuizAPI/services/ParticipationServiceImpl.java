@@ -7,6 +7,7 @@ import com.APIQuiz.QuizAPI.entites.Reponse;
 import com.APIQuiz.QuizAPI.repository.ParticipationRepository;
 import com.APIQuiz.QuizAPI.repository.QuizRepository;
 import com.APIQuiz.QuizAPI.repository.UtilisateurRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,57 +26,44 @@ public class ParticipationServiceImpl implements IParticipationService{
 
     @Override
     public Participation ajouter(Participation participation) {
-        if (participation==null){
-            throw new RuntimeException("Information user incorrect");
-        }else {
+        Participation participation1 = participationRepository.findByScore(participation.getScore());
+        if (participation1==null){
             return participationRepository.save(participation);
+        }else {
+            throw new EntityNotFoundException("Participation existe deja");
         }
     }
 
     @Override
-    public List<Participation> listeParticipant() {
+    public List<Participation> afficher() {
         return participationRepository.findAll();
     }
 
     @Override
-    public Participation afficherParId(Long idParticipation) {
-        return participationRepository.findById(idParticipation).get();
+    public Participation lire(Long idParticipation) {
+        return participationRepository.findById(idParticipation).orElseThrow(
+                ()-> new EntityNotFoundException("identifiant existe deja")
+        );
     }
 
     @Override
     public void supprimer(Long idParticipation) {
-        if (idParticipation==null){
-            throw new RuntimeException("Remplissez les champs vides");
-        }else {
+        Participation participation = participationRepository.findByIdParticipation(idParticipation);
+        if (idParticipation!=null){
             participationRepository.deleteById(idParticipation);
+        }else {
+            throw new RuntimeException("L'identifiant n'existe pas !");
         }
     }
 
     @Override
     public Participation modifier(Participation participation) {
-        if (participation==null){
-            throw new RuntimeException("Remplissez les champs vides");
-        }else {
+        Participation participation1 = participationRepository.findByScore(participation.getScore());
+        if (participation1==null){
             return participationRepository.save(participation);
+        }else {
+            throw new EntityNotFoundException("Participation existe deja");
         }
-    }
-
-    @Override
-    public HashMap<String, String> resultat1(String titre, String username) {
-        return null;
-    }
-
-    @Override
-    public HashMap<String, String> resultat(String titre, String username) {
-       /* Participation participation = participationRepository.findByQuizParticipationAndUtilisateurParticipation(
-                quizRepository.findByTitre(titre),
-                utilisateurRepository.findByUsername(username)
-        );
-
-        HashMap<String,String> hashMap = new HashMap<>();
-        hashMap.put("titre",participation.getQuizParticipation().getTitre());
-        hashMap.put("titre",participation.getUtilisateurParticipation().getUsername());*/
-        return null; //hashMap;
     }
 
 //    Methode pour recuperer la liste ds quiz

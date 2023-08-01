@@ -29,25 +29,25 @@ public class ParticipationController {
     //    endpoint: afficher toute la liste
     @GetMapping("/listeAllParticipant")
     private List<Participation> list(){
-        return participationService.listeParticipant();
+        return participationService.afficher();
     }
 
     //    enpoint: afficher liste par id
     @GetMapping("/listeIdPart")
-    private ResponseEntity<Participation> quizIdList(@Valid @RequestParam Long idPart){
-        Participation participant = participationService.afficherParId(idPart);
-        return ResponseEntity.ok(participant);
+    private Participation quizIdList(@RequestParam Long idPart){
+        return participationService.lire(idPart);
     }
 
     //    enpoint: modifier participation
     @PutMapping("/modifierPart")
-    private Participation modifier(@Valid @RequestBody Participation participation){
-        return participationService.modifier(participation);
+    private String modifier(@Valid @RequestBody Participation participation){
+        participationService.modifier(participation);
+        return "Participant modifier";
     }
 
     //    endpoint: supprimer Participation
     @DeleteMapping("/supprimerPart")
-    private String supprimer(@Valid @RequestParam Long idParticipation){
+    private String supprimer(@RequestParam Long idParticipation){
         participationService.supprimer(idParticipation);
         return "Participation supprimer avec succes";
     }
@@ -64,11 +64,6 @@ public class ParticipationController {
         }else {
             return participationService.verificationDesReponse(idUser,idQuiz,choix);
         }
-    }
-
-    @GetMapping("/commencer")
-    private HashMap<String,String> jouer(@RequestParam("username") String username, @RequestParam("titre") String titre){
-        return participationService.resultat(username,titre);
     }
 
 }

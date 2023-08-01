@@ -1,14 +1,9 @@
 package com.APIQuiz.QuizAPI.controllers;
 
-import com.APIQuiz.QuizAPI.Erreur.MessageErreur;
-import com.APIQuiz.QuizAPI.Erreur.UserNotFoundException;
 import com.APIQuiz.QuizAPI.entites.Utilisateur;
 import com.APIQuiz.QuizAPI.services.IUtilisateurService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,13 +29,13 @@ public class UtilisateurController {
 
     }
 
-//    endpoint: afficher toute la liste
+//    endpoint: afficher toute la liste de Utilisateur
     @GetMapping("/listeAll")
     private List<Utilisateur> list(){
         return utilisateurService.afficher();
     }
 
-//    enpoint: afficher liste par id
+//    enpoint: lire un Utilisateur
     @GetMapping("/listeId")
     private Utilisateur userAllList(@RequestParam Long idUser) {
            return utilisateurService.lire(idUser);

@@ -1,6 +1,7 @@
 package com.APIQuiz.QuizAPI.controllers.Advice;
 
 import com.APIQuiz.QuizAPI.Erreur.MessageErreur;
+import com.APIQuiz.QuizAPI.Erreur.NotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;

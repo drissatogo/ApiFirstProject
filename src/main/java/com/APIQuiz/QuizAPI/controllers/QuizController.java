@@ -19,12 +19,8 @@ public class QuizController {
     //    endpoint: ajouter Quiz
     @PostMapping("/ajouterQuiz")
     private String ajouter(@Valid @RequestBody Quiz quiz){
-        if (quiz!=null){
-            quizService.ajouter(quiz);
-            return "Quiz ajouter";
-        }else {
-            return "Remplisser les champs vide";
-        }
+        quizService.ajouter(quiz);
+        return "Quiz a ete cree";
     }
 
     //    endpoint: afficher toute la liste
@@ -35,9 +31,8 @@ public class QuizController {
 
     //    enpoint: afficher liste par id
     @GetMapping("/listeIdQuiz")
-    private ResponseEntity<Quiz> quizIdList(@Valid @RequestParam Long idQuiz){
-        Quiz quiz = quizService.afficherParId(idQuiz);
-        return ResponseEntity.ok(quiz);
+    private Quiz quizIdList(@RequestParam Long idQuiz){
+        return quizService.lire(idQuiz);
     }
 
     //    enpoint: modifier Quiz
@@ -46,9 +41,9 @@ public class QuizController {
         return quizService.modifier(quiz);
     }
 
-    //    endpoint: supprimer Utilisateur
+    //    endpoint: supprimer quiz
     @DeleteMapping("/supprimerQuiz")
-    private String supprimer(@Valid @RequestParam Long idQuiz){
+    private String supprimer(@RequestParam Long idQuiz){
         quizService.supprimer(idQuiz);
         return "Quiz supprimer avec succes";
     }
