@@ -53,7 +53,7 @@ public class ParticipationController {
     }
 
     @GetMapping("/")
-    private List<String> afficherQuestion(){
+    private List<String> afficher(){
         return participationService.recupererListQuiz();
     }
 
