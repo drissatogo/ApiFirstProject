@@ -1,9 +1,11 @@
 package com.APIQuiz.QuizAPI.services;
 
+import com.APIQuiz.QuizAPI.Erreur.NotFoundException;
 import com.APIQuiz.QuizAPI.entites.Question;
 import com.APIQuiz.QuizAPI.repository.ParticipationRepository;
 import com.APIQuiz.QuizAPI.repository.QuestionRepository;
 import com.APIQuiz.QuizAPI.repository.QuizRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,12 +20,22 @@ public class QuestionServiceImpl implements IQuestionService{
 
     @Override
     public Question creerQuestion(Question question) {
-        return questionRepository.save(question);
+        Question question1 = questionRepository.findByTexte(question.getTexte());
+        if (question1==null){
+            return questionRepository.save(question);
+        }else {
+            throw new EntityNotFoundException("Question existe deja !");
+        }
     }
 
     @Override
     public Question modifierQuestion(Question question) {
-        return questionRepository.save(question);
+        Question question1 = questionRepository.findByTexte(question.getTexte());
+        if (question1==null){
+            return questionRepository.save(question);
+        }else {
+            throw new EntityNotFoundException("texte existe deja !");
+        }
     }
 
     @Override
@@ -31,28 +43,19 @@ public class QuestionServiceImpl implements IQuestionService{
         return questionRepository.findAll();
     }
 
-    public Question afficherParId(Long idQuestion){
-        return questionRepository.findById(idQuestion).get();
-    }
-
-    public Question afficherParQuestion(Long idQuestion){
-        return null; //questionRepository.findByIdQuestion(idQuestion);
-
+    public Question lire(Long idQuestion){
+        return questionRepository.findById(idQuestion).orElseThrow(
+                ()-> new NotFoundException("Cet identifiant n'existe pas !")
+        );
     }
 
     @Override
-    public List<Question> afficherParUser(Long idUser) {
-        return null;
-    }
-
-    @Override
-    public String supprimerQuestion(Long idQuestion) {
-        questionRepository.deleteById(idQuestion);
-        return "Question supprimée";
-    }
-
-    @Override
-    public Question listParId(Long idQuestion) {
-        return null;
+    public void supprimerQuestion(Long idQuestion) {
+        Question question = questionRepository.findByidQuestion(idQuestion);
+        if (question!=null){
+            questionRepository.deleteById(idQuestion);
+        }else {
+            throw new EntityNotFoundException("identifiant n'existe pas !");
+        }
     }
 }

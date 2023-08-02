@@ -23,7 +23,7 @@ public class ParticipationController {
     private IParticipationService participationService;
 
 
-    //    endpoint: ajouter Quiz
+    //================================= End-Point: Ajouter des participants ===========================
     @PostMapping("/ajouterPart")
     @Operation(summary = "Ajout des participants")
     @ApiResponse(responseCode = "200", description = "Participant ajouté avec succès",
@@ -35,64 +35,68 @@ public class ParticipationController {
         return "Participant ajouter";
     }
 
-    //    endpoint: afficher toute la liste
+    //================================= End-Point: Liste de tous les participants ===========================
     @GetMapping("/listeAllParticipant")
     @Operation(summary = "Liste de tous les participants")
     @ApiResponse(responseCode = "200", description = "Liste trouvé avec succès",
             content = @Content(schema = @Schema(implementation = Participation.class)))
     @ApiResponse(responseCode = "404", description = "Liste non trouvée")
-    private List<Participation> list() {
-        return participationService.listeParticipant();
+    private List<Participation> list(){
+        return participationService.afficher();
     }
 
-    //    enpoint: afficher liste par id
+    //================================= End-Point: Liste des participants par leurs identifiants ===========================
     @GetMapping("/listeIdPart")
     @Operation(summary = "Liste des participants par leur identifiant")
     @ApiResponse(responseCode = "200", description = "Liste trouvée",
             content = @Content(schema = @Schema(implementation = Participation.class)))
     @ApiResponse(responseCode = "404", description = "Liste non trouvée")
-    private ResponseEntity<Participation> quizIdList(@Valid @RequestParam Long idPart) {
-        Participation participant = participationService.afficherParId(idPart);
-        return ResponseEntity.ok(participant);
+    private Participation quizIdListe(@RequestParam Long idPart){
+        return participationService.lire(idPart);
     }
 
-    //    enpoint: modifier participation
+    //================================= End-Point: Modification des participants ===========================
     @PutMapping("/modifierPart")
     @Operation(summary = "Modifier un participant")
     @ApiResponse(responseCode = "200", description = "Participant modifié avec succès",
             content = @Content(schema = @Schema(implementation = Participation.class)))
     @ApiResponse(responseCode = "404", description = "Participant non modifié")
-    private Participation modifier(@Valid @RequestBody Participation participation) {
-        return participationService.modifier(participation);
+    private String modifier(@Valid @RequestBody Participation participation){
+        participationService.modifier(participation);
+        return "Participant modifier";
     }
 
-    //    endpoint: supprimer Participation
+    //================================= End-Point: Suppression des participants ===========================
     @DeleteMapping("/supprimerPart")
     @Operation(summary = "Supprimer un participant")
     @ApiResponse(responseCode = "200", description = "Participant supprimé avec succès",
             content = @Content(schema = @Schema(implementation = Participation.class)))
     @ApiResponse(responseCode = "404", description = "Erreur de suppression")
-    private String supprimer(@Valid @RequestParam Long idParticipation) {
+    private String supprimer(@RequestParam Long idParticipation){
         participationService.supprimer(idParticipation);
         return "Participation supprimé avec succes";
     }
 
-    @GetMapping("/")
-    private List<String> afficherQuestion() {
+    //================================= End-Point: Afficher les quiz pour les participants ===========================
+    @GetMapping("/afficher")
+    @Operation(summary = "Afficher toutes la liste de participation")
+    @ApiResponse(responseCode = "200", description = "Affichée avec succès",
+            content = @Content(schema = @Schema(implementation = Participation.class)))
+    @ApiResponse(responseCode = "404", description = "Erreur d'affichage")
+    private List<String> afficher(){
         return participationService.recupererListQuiz();
     }
-
+    //================================= End-Point: Jouer à un quiz ===========================
     @GetMapping("/{idUser}/{idQuiz}/play")
-    private List<String> afficher(@PathVariable Long idUser, @PathVariable Long idQuiz, @RequestParam(value = "choix", required = false) Integer choix) {
-        if (choix == null) {
-            return participationService.commencer(idUser, idQuiz);
-        } else {
-            return participationService.verificationDesReponse(idUser, idQuiz, choix);
+    @Operation(summary = "Jouer au Quiz")
+    @ApiResponse(responseCode = "200", description = "Jeu lancé avec succès",
+            content = @Content(schema = @Schema(implementation = Participation.class)))
+    @ApiResponse(responseCode = "404", description = "Erreur de lancement")
+    private List<String> afficheJeux(@PathVariable Long idUser,@PathVariable Long idQuiz,@RequestParam(value = "choix",required = false) Integer choix){
+        if (choix==null){
+            return participationService.commencer(idUser,idQuiz);
+        }else {
+            return participationService.verificationDesReponse(idUser,idQuiz,choix);
         }
-    }
-
-    @GetMapping("/commencer")
-    private HashMap<String, String> jouer(@RequestParam("username") String username, @RequestParam("titre") String titre) {
-        return participationService.resultat(username, titre);
     }
 }

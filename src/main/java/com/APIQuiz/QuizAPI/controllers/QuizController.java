@@ -23,12 +23,8 @@ public class QuizController {
     //    endpoint: ajouter Quiz
     @PostMapping("/ajouterQuiz")
     private String ajouter(@Valid @RequestBody Quiz quiz){
-        if (quiz!=null){
-            quizService.ajouter(quiz);
-            return "Quiz ajouter";
-        }else {
-            return "Remplisser les champs vide";
-        }
+        quizService.ajouter(quiz);
+        return "Quiz a été crée";
     }
 
     //    endpoint: afficher toute la liste
@@ -48,10 +44,8 @@ public class QuizController {
     @ApiResponse(responseCode = "200", description = "La liste a été trouvé",
             content = @Content(schema = @Schema(implementation = Quiz.class)))
     @ApiResponse(responseCode = "404", description = "Liste non trouvée")
-
-    private ResponseEntity<Quiz> quizIdList(@Valid @RequestParam Long idQuiz){
-        Quiz quiz = quizService.afficherParId(idQuiz);
-        return ResponseEntity.ok(quiz);
+    private Quiz quizIdList(@RequestParam Long idQuiz){
+        return quizService.lire(idQuiz);
     }
 
     //    enpoint: modifier Quiz
@@ -65,14 +59,13 @@ public class QuizController {
         return quizService.modifier(quiz);
     }
 
-    //    endpoint: supprimer Utilisateur
+    //    endpoint: supprimer quiz
     @DeleteMapping("/supprimerQuiz")
     @Operation(summary = "Supprimer un quiz")
     @ApiResponse(responseCode = "200", description = "Quiz supprimé avec succès",
             content = @Content(schema = @Schema(implementation = Quiz.class)))
     @ApiResponse(responseCode = "404", description = "Quiz non supprimé")
-
-    private String supprimer(@Valid @RequestParam Long idQuiz){
+    private String supprimer(@RequestParam Long idQuiz){
         quizService.supprimer(idQuiz);
         return "Quiz supprimé avec succes";
     }

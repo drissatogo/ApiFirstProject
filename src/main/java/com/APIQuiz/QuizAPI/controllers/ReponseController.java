@@ -13,65 +13,68 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.APIQuiz.QuizAPI.entites.Reponse;
+import com.APIQuiz.QuizAPI.services.IReponseService;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 @RestController
-@RequestMapping
+@AllArgsConstructor
+@RequestMapping("reponse")
 public class ReponseController {
 
+    private IReponseService reponseService;
 
-    @Autowired
-    private ReponseServiceImpl reponseService;
-
-    @GetMapping("/afficherReponse/{idReponse}")
-    @Operation(summary = "Liste de réponse par son identfiant")
-    @ApiResponse(responseCode = "200", description = "Reponse trouvée avec succès",
-            content = @Content(schema = @Schema(implementation = Reponse.class)))
-    @ApiResponse(responseCode = "404", description = "Reponse non trouvée")
-
-    public ResponseEntity<Reponse> getReponseById(@PathVariable Long idReponse) {
-        Reponse reponse = reponseService.getReponseById(idReponse);
-        if (reponse != null) {
-            return ResponseEntity.ok(reponse);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @PostMapping("/creerReponse")
+    //    endpoint: ajouter reponse
+    @PostMapping("/ajouter")
     @Operation(summary = "Création de reponse par l'utilisateur")
     @ApiResponse(responseCode = "200", description = "Réponse crée avec succès",
             content = @Content(schema = @Schema(implementation = Reponse.class)))
     @ApiResponse(responseCode = "404", description = "Réponse non crée")
-
-    public ResponseEntity<Reponse> creerReponse(@RequestBody Reponse reponse) {
-        Reponse nouvelleReponse = reponseService.creerReponse(reponse);
-        return ResponseEntity.ok(nouvelleReponse);
+    private String ajouter(@Valid @RequestBody Reponse reponse){
+        reponseService.ajouter(reponse);
+        return "La réponse a été crée";
     }
 
-    @PutMapping("/modifierReponse/{idReponse}")
-    @Operation(summary = "Modifier une reponse par son identifiant")
+    //    endpoint: afficher toute la liste
+    @GetMapping("/listeAllQuiz")
+
+    private List<Reponse> list(){
+        return reponseService.afficher();
+    }
+
+    //    enpoint: afficher liste par id
+    @GetMapping("/listeIdQuiz")
+    @Operation(summary = "Liste de réponse par son identfiant")
+    @ApiResponse(responseCode = "200", description = "Reponse trouvée avec succès",
+            content = @Content(schema = @Schema(implementation = Reponse.class)))
+    @ApiResponse(responseCode = "404", description = "Reponse non trouvée")
+    private Reponse lire(@RequestParam Long idReponse){
+        return reponseService.lire(idReponse);
+    }
+
+    //    enpoint: modifier reponse
+    @PutMapping("/modifier")
+    @Operation(summary = "Modifier une reponse")
     @ApiResponse(responseCode = "200", description = "Réponse modifier avec succès",
             content = @Content(schema = @Schema(implementation = Reponse.class)))
     @ApiResponse(responseCode = "404", description = "Réponse non modifiée")
-
-    public ResponseEntity<Reponse> modifierReponse(@PathVariable Long idReponse, @RequestParam("text") String text) {
-        Reponse reponseModifiee = reponseService.modifierReponse(idReponse, text);
-        if (reponseModifiee != null) {
-            return ResponseEntity.ok(reponseModifiee);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    private String modifier(@Valid @RequestBody Reponse reponse){
+        reponseService.modifier(reponse);
+        return "Réponse modifiée";
     }
 
-    @DeleteMapping("/supprimerReponse/{idReponse}")
+    //    endpoint: supprimer reponse
+    @DeleteMapping("/supprimer")
     @Operation(summary = "Suppression de reponse par son identifiant")
     @ApiResponse(responseCode = "200", description = "Réponse supprimée avec succès",
             content = @Content(schema = @Schema(implementation = Reponse.class)))
     @ApiResponse(responseCode = "404", description = "Erreur de suppression")
-
-    public ResponseEntity<Void> supprimerReponse(@PathVariable Long idReponse) {
-        reponseService.supprimerReponse(idReponse);
-        return ResponseEntity.noContent().build();
+    private String supprimer(@RequestParam Long idReponse){
+        reponseService.supprimer(idReponse);
+        return "Quiz supprimer avec succes";
     }
 }

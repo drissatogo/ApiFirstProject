@@ -1,18 +1,19 @@
 package com.APIQuiz.QuizAPI.controllers;
-import com.APIQuiz.QuizAPI.Erreur.MessageErreur;
-import com.APIQuiz.QuizAPI.Erreur.UserNotFoundException;
 import com.APIQuiz.QuizAPI.entites.Utilisateur;
 import com.APIQuiz.QuizAPI.services.IUtilisateurService;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+/*import com.APIQuiz.QuizAPI.Erreur.MessageErreur;
+import com.APIQuiz.QuizAPI.Erreur.UserNotFoundException;
+import com.APIQuiz.QuizAPI.entites.Utilisateur;
+import com.APIQuiz.QuizAPI.services.IUtilisateurService;*/
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -29,15 +30,17 @@ public class UtilisateurController {
     @ApiResponse(responseCode = "200", description = "Utilisateur ajouté avec succès",
             content = @Content(schema = @Schema(implementation = Utilisateur.class)))
     @ApiResponse(responseCode = "404", description = "Utilisateur non ajouté")
-    private ResponseEntity inscrire(@Valid @RequestBody Utilisateur utilisateur){
-        //try{
-            utilisateurService.inscrire(utilisateur);
-            return ResponseEntity.status(HttpStatus.CREATED).body(utilisateur);
-        //}catch (UserNotFoundException exception){
-            //return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageErreur("Utilisateur existe deja","Changer d'information"));
-        //}
-
+    private Utilisateur inscrire(@Valid @RequestBody Utilisateur utilisateur){
+          return utilisateurService.inscrire(utilisateur);
     }
+
+    /*private ResponseEntity inscrire(@Valid @RequestBody Utilisateur utilisateur){
+        //try{
+        utilisateurService.inscrire(utilisateur);
+        return ResponseEntity.status(HttpStatus.CREATED).body(utilisateur);
+        //}catch (UserNotFoundException exception){
+        //return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageErreur("Utilisateur existe deja","Changer d'information"));
+        //}*/
 
 //    endpoint: connecter Utilisateur
         @GetMapping("/connecter")
@@ -50,7 +53,7 @@ public class UtilisateurController {
            return "Connexion reussit";
     }
 
-//    endpoint: afficher toute la liste
+//    endpoint: afficher toute la liste de Utilisateur
     @GetMapping("/listeAll")
     @Operation(summary = "Liste de tous les utilisateurs")
     @ApiResponse(responseCode = "200", description = "Liste trouvée avec succès",
@@ -61,7 +64,7 @@ public class UtilisateurController {
         return utilisateurService.afficher();
     }
 
-//    enpoint: afficher liste par id
+//    enpoint: lire un Utilisateur
     @GetMapping("/listeId")
     @Operation(summary = "Liste des utilisateurs par leur identifiant ")
     @ApiResponse(responseCode = "200", description = "Liste trouvé avec succès",

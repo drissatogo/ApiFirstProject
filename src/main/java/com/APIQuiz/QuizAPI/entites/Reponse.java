@@ -1,5 +1,6 @@
 package com.APIQuiz.QuizAPI.entites;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -17,10 +18,10 @@ public class Reponse {
 
     @Column(name = "texte")
     @NotNull(message = "Remplissez les champs vides")
-    @Size(max = 100, message = "Texte trop long")
+    @Size(max = 255, message = "Texte trop long")
     private String texte;
 
-    @Column(name = "status")
+    @Column(name = "bonneReponse")
     @NotNull(message = "Remplissez les champs vides")
     @Size(max = 50, message = "Texte trop long")
     private String bonneReponse;
@@ -32,8 +33,10 @@ public class Reponse {
 
     //=========================== Les rélations JPA ==============================
     @ManyToOne
+    @JsonIgnore
     private Utilisateur utilisateurReponse;
 
     @ManyToOne
+    @JsonIgnore
     private Question questionReponse;
 }
