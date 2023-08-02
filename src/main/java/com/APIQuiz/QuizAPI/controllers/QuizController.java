@@ -22,6 +22,10 @@ public class QuizController {
 
     //    endpoint: ajouter Quiz
     @PostMapping("/ajouterQuiz")
+    @Operation(summary = "Ajout d'un quiz")
+    @ApiResponse(responseCode = "200", description = "Quiz crée avec succès",
+            content = @Content(schema = @Schema(implementation = Quiz.class)))
+    @ApiResponse(responseCode = "404", description = "Quiz non trouvé")
     private String ajouter(@Valid @RequestBody Quiz quiz){
         quizService.ajouter(quiz);
         return "Quiz a été crée";

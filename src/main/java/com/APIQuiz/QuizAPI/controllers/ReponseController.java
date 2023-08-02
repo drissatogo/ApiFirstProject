@@ -1,5 +1,6 @@
 package com.APIQuiz.QuizAPI.controllers;
 
+import com.APIQuiz.QuizAPI.entites.Quiz;
 import com.APIQuiz.QuizAPI.entites.Reponse;
 import com.APIQuiz.QuizAPI.entites.Utilisateur;
 import com.APIQuiz.QuizAPI.services.IUtilisateurService;
@@ -41,11 +42,13 @@ public class ReponseController {
 
     //    endpoint: afficher toute la liste
     @GetMapping("/listeAllQuiz")
-
+    @Operation(summary = "Afficher toute la liste de tout les quiz")
+    @ApiResponse(responseCode = "200", description = "La liste des quiz a été trouvé",
+            content = @Content(schema = @Schema(implementation = Quiz.class)))
+    @ApiResponse(responseCode = "404", description = "Liste non trouvée")
     private List<Reponse> list(){
         return reponseService.afficher();
     }
-
     //    enpoint: afficher liste par id
     @GetMapping("/listeIdQuiz")
     @Operation(summary = "Liste de réponse par son identfiant")
