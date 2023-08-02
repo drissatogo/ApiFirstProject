@@ -33,7 +33,6 @@ public class ReponseServiceImpl implements IReponseService {
         if (reponse != null) {
             reponse.setTexte(text);
             reponse.setPoint(point);
-            reponse.setStatus(status);
             return reponseRepository.save(reponse);
         }
         return null;
@@ -51,7 +50,7 @@ public class ReponseServiceImpl implements IReponseService {
         }
 
         // Mettez à jour d'autres champs de l'objet reponseAModifier si nécessaire
-        reponseAModifier.setStatus(reponse.getStatus());
+        reponseAModifier.setPoint(reponse.getPoint());
         reponseAModifier.setTexte(reponse.getTexte());
 
         // Sauvegardez les modifications dans la base de données
