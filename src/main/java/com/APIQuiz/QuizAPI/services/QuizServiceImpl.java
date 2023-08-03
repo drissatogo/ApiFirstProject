@@ -13,6 +13,9 @@ import java.util.List;
 public class QuizServiceImpl implements IQuizService{
 
     private QuizRepository quizRepository;
+
+
+    //===================== Ajout d'un quiz ============================
     @Override
     public Quiz ajouter(Quiz quiz) {
         Quiz quiz1 = quizRepository.findByTitre(quiz.getTitre());
@@ -23,11 +26,12 @@ public class QuizServiceImpl implements IQuizService{
         }
     }
 
+    //===================== Liste de tous les Quiz ============================
     @Override
     public List<Quiz> listeQuiz() {
         return quizRepository.findAll();
     }
-
+    //===================== Liste des Quiz en fonction de Id ============================
     @Override
     public Quiz lire(Long idQuiz) {
         return quizRepository.findById(idQuiz).orElseThrow(

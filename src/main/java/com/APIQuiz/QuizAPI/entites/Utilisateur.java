@@ -55,7 +55,8 @@ public class Utilisateur {
     private List<Question> questionUser;
 
     @OneToMany(mappedBy = "utilisateurReponse",orphanRemoval = true)
-//    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    //@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @JsonIgnore
     private List<Reponse> reponseUser;
 
     @OneToMany(mappedBy = "utilisateurParticipation",orphanRemoval = true)

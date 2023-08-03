@@ -30,7 +30,7 @@ public class ParticipationServiceImpl implements IParticipationService{
         if (participation1==null){
             return participationRepository.save(participation);
         }else {
-            throw new EntityNotFoundException("Participation existe deja");
+            throw new EntityNotFoundException("Participation existe déjà");
         }
     }
 
@@ -95,7 +95,7 @@ public class ParticipationServiceImpl implements IParticipationService{
             List<String> listQuestionReponse = new ArrayList<>();
             listQuestionReponse.add("Selectionner un numero pour la bonne reponse");
             listQuestionReponse.add(question.getTexte());
-            listQuestionReponse.add("<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>");
+            listQuestionReponse.add("");
             question.getReponseQuestion().forEach(reponse -> {
                 listQuestionReponse.add(listQuestionReponse.size()-2+ " : " +reponse.getTexte());
             });
@@ -104,9 +104,9 @@ public class ParticipationServiceImpl implements IParticipationService{
             Question question = quizRepository.findByIdQuiz(quizRepository.findAll().get((int)(idQuiz-1)).getIdQuiz())
                     .getQuestionQuiz().get(participation.getNiveau()-1);
             List<String> listQuestionReponse = new ArrayList<>();
-            listQuestionReponse.add("Selectionner un numero pour la bonne reponse");
+            listQuestionReponse.add("Sélectionner un numéro pour la bonne réponse");
             listQuestionReponse.add(question.getTexte());
-            listQuestionReponse.add("<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>");
+            listQuestionReponse.add("====================================================");
             question.getReponseQuestion().forEach(reponse -> {
                 listQuestionReponse.add(listQuestionReponse.size()-2+ " : " +reponse.getTexte());
             });
@@ -121,7 +121,7 @@ public class ParticipationServiceImpl implements IParticipationService{
                 .getQuestionQuiz().get(participation.getNiveau()-1);
         Reponse reponse = question.getReponseQuestion().get(choix-1);
         List<String>  listReponse = new ArrayList<>();
-        if (reponse.getBonneReponse().equals("vrai")){
+        if (reponse.getBonneReponse().equals("Vrai")){
             List<Question> questionList = quizRepository.findByIdQuiz(quizRepository.findAll().get((int)(idQuiz-1)).getIdQuiz())
                     .getQuestionQuiz();
             if (questionList.size()>=participation.getNiveau()+1){
@@ -130,11 +130,11 @@ public class ParticipationServiceImpl implements IParticipationService{
                 participationRepository.save(participation);
                 question = quizRepository.findByIdQuiz(quizRepository.findAll().get((int)(idQuiz-1)).getIdQuiz())
                         .getQuestionQuiz().get(participation.getNiveau()-1);
-                listReponse.add("Felicitation vous avez trouver la bonne reponse");
-                listReponse.add("Votre score est de " +participation.getScore()+ "points");
-                listReponse.add("Passer a la question suivantes");
+                listReponse.add("Félicitations vous avez trouvé la bonne réponse");
+                listReponse.add("Votre score est de " +participation.getScore()+" "+"points");
+                listReponse.add("Passer à la question suivante");
                 listReponse.add(question.getTexte());
-                listReponse.add("<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>");
+                listReponse.add("");
                 question.getReponseQuestion().forEach(reponse1 -> {
                     listReponse.add(listReponse.size()-4 + " : " +reponse1.getTexte());
                 });
@@ -142,9 +142,9 @@ public class ParticipationServiceImpl implements IParticipationService{
             }else {
                 participation.setScore(participation.getScore()+10);
                 participationRepository.save(participation);
-                listReponse.add("Felicitation vous avez trouver la bonne reponse");
-                listReponse.add("Jeu terminer !!!");
-                listReponse.add("Votre score final est :" +participation.getScore()+ "points");
+                listReponse.add("Félicitations vous avez trouvé la bonne réponse");
+                listReponse.add("Jeu terminé !!!");
+                listReponse.add("Votre score final est :" +participation.getScore()+" " + "points");
                 return listReponse;
             }
         }else {
@@ -156,27 +156,27 @@ public class ParticipationServiceImpl implements IParticipationService{
                 Question question1 = quizRepository.findByIdQuiz(quizRepository.findAll().get((int)(idQuiz-1)).getIdQuiz())
                         .getQuestionQuiz().get(participation.getNiveau()-1);
                 question.getReponseQuestion().forEach(reponse1 -> {
-                    if (reponse1.getBonneReponse().equals("vrai")){
-                        listReponse.add("Vous n'avez pas trouver la bonne reponse");
-                        listReponse.add("Voici la reponse: " +reponse1.getTexte());
+                    if (reponse1.getBonneReponse().equals("Vrai")){
+                        listReponse.add("Vous n'avez pas trouvé la bonne réponse");
+                        listReponse.add("Voici la réponse: " +reponse1.getTexte());
                     }
                 });
-                listReponse.add("Passer a la question suivante");
+                listReponse.add("Passez à la question suivante");
                 listReponse.add(question1.getTexte());
-                listReponse.add("<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>");
+                listReponse.add("");
                 question1.getReponseQuestion().forEach(reponse2 -> {
                     listReponse.add(listReponse.size()-4 +" : "+reponse2.getTexte());
                 });
                 return listReponse;
             }else {
                 question.getReponseQuestion().forEach(reponse1 -> {
-                    if (reponse1.getBonneReponse().equals("vrai")){
-                        listReponse.add("Vous n'avez pas trouver la bonne reponse");
-                        listReponse.add("Voici la reponse: " +reponse1.getTexte());
+                    if (reponse1.getBonneReponse().equals("Vrai")){
+                        listReponse.add("Vous n'avez pas trouvé la bonne réponse");
+                        listReponse.add("La bonne réponse était : " +reponse1.getTexte());
                     }
                 });
-                listReponse.add("Jeu terminer !!!");
-                listReponse.add("Votre score final est :" +participation.getScore()+ "points");
+                listReponse.add("Jeu terminé !!!");
+                listReponse.add("Votre score final est : " +participation.getScore()+" "+"points");
                 return listReponse;
             }
 

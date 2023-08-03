@@ -17,6 +17,8 @@ public class UtilisateurServiceImpl implements IUtilisateurService{
 
     private UtilisateurRepository utilisateurRepository;    //  injection du repository user
 
+
+    //====================== Inscription de l'utilisateur ================
     @Override
     public Utilisateur inscrire(Utilisateur utilisateur) {
         Utilisateur utilisateurVerif = utilisateurRepository.findByUsername(utilisateur.getUsername());
@@ -26,7 +28,7 @@ public class UtilisateurServiceImpl implements IUtilisateurService{
             throw new EntityNotFoundException("User existe deja !");
         }
     }
-
+    //======================= Connexion de l'utilisateur =====================
     @Override
     public String connexion(String username,String password) {
         Utilisateur user = utilisateurRepository.findByUsernameAndPassword(username,password);
@@ -35,20 +37,21 @@ public class UtilisateurServiceImpl implements IUtilisateurService{
         }else {
             throw new EntityNotFoundException("User existe deja !");
         }
-    }
 
+    }
+    //===================== Liste des utilisateurs ============================
     @Override
     public List<Utilisateur> afficher() {
         return utilisateurRepository.findAll();
     }
-
+    //===================== Liste par Id de l'utilisateur ============================
     @Override
     public Utilisateur lire(Long id) {
         return utilisateurRepository.findById(id).orElseThrow(
                 ()-> new EntityNotFoundException("Aucun client n'existe avec cette identifiant")
         );
     }
-
+    //===================== Suppression d'un utilisateur ============================
     @Override
     public void supprimer(Long idUser) {
         Utilisateur utilisateur = utilisateurRepository.findByIdUser(idUser);
@@ -59,7 +62,7 @@ public class UtilisateurServiceImpl implements IUtilisateurService{
         }
 
     }
-
+    //===================== Modifier un utilisateur ============================
     @Override
     public Utilisateur modifier(Utilisateur user) {
         Utilisateur utilisateurVerif = utilisateurRepository.findByUsername(user.getUsername());
