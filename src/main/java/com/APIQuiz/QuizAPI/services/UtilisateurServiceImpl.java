@@ -1,7 +1,5 @@
 package com.APIQuiz.QuizAPI.services;
 
-import com.APIQuiz.QuizAPI.Erreur.MessageErreur;
-import com.APIQuiz.QuizAPI.Erreur.UserNotFoundException;
 import com.APIQuiz.QuizAPI.entites.Utilisateur;
 import com.APIQuiz.QuizAPI.repository.UtilisateurRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -17,26 +15,25 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UtilisateurServiceImpl implements IUtilisateurService{
 
-    private UtilisateurRepository utilisateurRepository;    //injection
+    private UtilisateurRepository utilisateurRepository;    //  injection du repository user
 
     @Override
     public Utilisateur inscrire(Utilisateur utilisateur) {
-        Utilisateur utilisateur1 = utilisateurRepository.save(utilisateur);
-        if (utilisateur1!=null){
-            throw new UserNotFoundException("Remplissez les champs vides");
+        Utilisateur utilisateurVerif = utilisateurRepository.findByUsername(utilisateur.getUsername());
+        if (utilisateurVerif == null){
+            return utilisateurRepository.save(utilisateur);
         }else {
-            return utilisateurRepository.save(utilisateur1);
+            throw new EntityNotFoundException("User existe deja !");
         }
     }
 
     @Override
-    public String connexion(String username, String password) {
-        Utilisateur user = utilisateurRepository.findByUsername(username);
-        Utilisateur pass = utilisateurRepository.findByPassword(password);
-        if (pass.getPassword().equals(password) && user.getUsername().equals(username)){
+    public String connexion(String username,String password) {
+        Utilisateur user = utilisateurRepository.findByUsernameAndPassword(username,password);
+        if (user!=null){
             return "Connexion reussit";
         }else {
-            return "Connexion echoue";
+            throw new EntityNotFoundException("User existe deja !");
         }
     }
 
@@ -47,23 +44,29 @@ public class UtilisateurServiceImpl implements IUtilisateurService{
 
     @Override
     public Utilisateur lire(Long id) {
-        Optional<Utilisateur> utilisateur = utilisateurRepository.findById(id);
-        return utilisateur.orElseThrow(
+        return utilisateurRepository.findById(id).orElseThrow(
                 ()-> new EntityNotFoundException("Aucun client n'existe avec cette identifiant")
         );
     }
 
     @Override
     public void supprimer(Long idUser) {
-        utilisateurRepository.deleteById(idUser);
+        Utilisateur utilisateur = utilisateurRepository.findByIdUser(idUser);
+        if (utilisateur!=null){
+            utilisateurRepository.deleteById(idUser);
+        }else {
+            throw new EntityNotFoundException("id n'existe pas");
+        }
+
     }
 
     @Override
     public Utilisateur modifier(Utilisateur user) {
-        if (user==null){
-            throw new RuntimeException("Remplissez les champs vides");
-        }else {
+        Utilisateur utilisateurVerif = utilisateurRepository.findByUsername(user.getUsername());
+        if (utilisateurVerif == null){
             return utilisateurRepository.save(user);
+        }else {
+            throw new EntityNotFoundException("User existe deja !");
         }
     }
 

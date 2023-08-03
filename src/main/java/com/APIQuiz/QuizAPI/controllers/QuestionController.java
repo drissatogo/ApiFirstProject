@@ -20,12 +20,18 @@ public class QuestionController {
     private IQuestionService questionService; // Injection
 
     @PostMapping("/create")
-    public Question creerQuestion(@RequestBody Question question){
-        return questionService.creerQuestion(question);
+    public String creerQuestion(@Valid @RequestBody Question question){
+//        if (question!=null){
+            questionService.creerQuestion(question);
+                return "La question a ete cree";
+//        }else {
+//            return "information ";
+//        }
     }
     @PutMapping("/update")
-    public Question modifierQuestion(@RequestBody Question question){
-        return questionService.modifierQuestion(question);
+    public String modifierQuestion(@Valid @RequestBody Question question){
+        questionService.modifierQuestion(question);
+             return "La question a ete modifier";
     }
     @GetMapping("/list")
     public List<Question> listeQuestion(){
@@ -33,13 +39,14 @@ public class QuestionController {
     }
 
     @GetMapping("/listeParId")
-    private ResponseEntity<Question> afficherQuestionParId(@Valid @RequestParam Long idQuestion){
-        Question question = questionService.listParId(idQuestion);
-        return ResponseEntity.ok(question);
+    private Question lire(@RequestParam Long idQuestion){
+         return questionService.lire(idQuestion);
     }
 
     @DeleteMapping("/delete")
-    public String supprimerQuestion(@RequestParam("idQuestion") Long idQuestion){
-        return questionService.supprimerQuestion(idQuestion);
+    public String supprimerQuestion(@RequestParam Long idQuestion){
+         questionService.supprimerQuestion(idQuestion);
+            return "Question supprimer";
     }
+
 }

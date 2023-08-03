@@ -1,5 +1,4 @@
 package com.APIQuiz.QuizAPI.controllers;
-
 import com.APIQuiz.QuizAPI.entites.Reponse;
 import com.APIQuiz.QuizAPI.entites.Utilisateur;
 import com.APIQuiz.QuizAPI.services.IUtilisateurService;
@@ -8,12 +7,17 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+
+import com.APIQuiz.QuizAPI.entites.Reponse;
+import com.APIQuiz.QuizAPI.services.IReponseService;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController
+@AllArgsConstructor
 @RequestMapping
 public class ReponseController {
 
@@ -22,8 +26,8 @@ public class ReponseController {
     private ReponseServiceImpl reponseService;
 
     @GetMapping("/afficherReponse/{idReponse}")
-    public ResponseEntity<Reponse> getReponseById(@PathVariable Long idReponse) {
-        Reponse reponse = reponseService.getReponseById(idReponse);
+    public ResponseEntity<Reponse> afficher(@PathVariable Long idReponse) {
+        Reponse reponse = reponseService.afficher(idReponse);
         if (reponse != null) {
             return ResponseEntity.ok(reponse);
         } else {
@@ -31,11 +35,12 @@ public class ReponseController {
         }
     }
 
-    @PostMapping("/creerReponse")
-    public ResponseEntity<Reponse> creerReponse(@RequestBody Reponse reponse) {
-        Reponse nouvelleReponse = reponseService.creerReponse(reponse);
-        return ResponseEntity.ok(nouvelleReponse);
+    @PostMapping("/ajouter")
+    private String ajouter(@Valid @RequestBody Reponse reponse){
+        reponseService.ajouter(reponse);
+        return "Quiz a ete cree";
     }
+
 
     @PutMapping("/modifierReponse/{idReponse}")
     public ResponseEntity<Reponse> modifierReponse(@PathVariable Long idReponse,
@@ -61,13 +66,53 @@ public class ReponseController {
 
     @DeleteMapping("/supprimerReponse/{idReponse}")
     public ResponseEntity<Void> supprimerReponse(@PathVariable Long idReponse) {
-        reponseService.supprimerReponse(idReponse);
+        reponseService.supprimer(idReponse);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/afficherListeReponses")
+   /* @GetMapping("/afficherListeReponses")
     public ResponseEntity<List<Reponse>> afficherListeReponses() {
         List<Reponse> reponses = reponseService.afficherLesReponses();
         return ResponseEntity.ok(reponses);
+    }*/
+/*@RestController
+@AllArgsConstructor
+@RequestMapping("reponse")
+public class ReponseController {
+
+    private IReponseService reponseService;
+
+    //    endpoint: ajouter reponse
+    @PostMapping("/ajouter")
+    private String ajouter(@Valid @RequestBody Reponse reponse){
+        reponseService.ajouter(reponse);
+        return "Quiz a ete cree";
     }
-}
+
+    //    endpoint: afficher toute la liste
+    @GetMapping("/listeAllQuiz")
+    private List<Reponse> list(){
+        return reponseService.afficher();
+    }
+
+    //    enpoint: afficher liste par id
+    @GetMapping("/listeIdQuiz")
+    private Reponse lire(@RequestParam Long idReponse){
+        return reponseService.lire(idReponse);
+    }
+
+    //    enpoint: modifier reponse
+    @PutMapping("/modifier")
+    private String modifier(@Valid @RequestBody Reponse reponse){
+        reponseService.modifier(reponse);
+        return "Reponse modifier";
+    }
+
+    //    endpoint: supprimer reponse
+    @DeleteMapping("/supprimer")
+    private String supprimer(@RequestParam Long idReponse){
+        reponseService.supprimer(idReponse);
+        return "Quiz supprimer avec succes";
+    }
+
+}}*/}

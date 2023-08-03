@@ -29,46 +29,41 @@ public class ParticipationController {
     //    endpoint: afficher toute la liste
     @GetMapping("/listeAllParticipant")
     private List<Participation> list(){
-        return participationService.listeParticipant();
+        return participationService.afficher();
     }
 
     //    enpoint: afficher liste par id
     @GetMapping("/listeIdPart")
-    private ResponseEntity<Participation> quizIdList(@Valid @RequestParam Long idPart){
-        Participation participant = participationService.afficherParId(idPart);
-        return ResponseEntity.ok(participant);
+    private Participation quizIdListe(@RequestParam Long idPart){
+        return participationService.lire(idPart);
     }
 
     //    enpoint: modifier participation
     @PutMapping("/modifierPart")
-    private Participation modifier(@Valid @RequestBody Participation participation){
-        return participationService.modifier(participation);
+    private String modifier(@Valid @RequestBody Participation participation){
+        participationService.modifier(participation);
+        return "Participant modifier";
     }
 
-    //    endpoint: supprimer Participation
+    //    endpoint: supprimer Participations
     @DeleteMapping("/supprimerPart")
-    private String supprimer(@Valid @RequestParam Long idParticipation){
+    private String supprimer(@RequestParam Long idParticipation){
         participationService.supprimer(idParticipation);
         return "Participation supprimer avec succes";
     }
 
     @GetMapping("/")
-    private List<String> afficherQuestion(){
+    private List<String> afficher(){
         return participationService.recupererListQuiz();
     }
 
     @GetMapping("/{idUser}/{idQuiz}/play")
-    private List<String> afficher(@PathVariable Long idUser,@PathVariable Long idQuiz,@RequestParam(value = "choix",required = false) Integer choix){
+    private List<String> afficheJeux(@PathVariable Long idUser,@PathVariable Long idQuiz,@RequestParam(value = "choix",required = false) Integer choix){
         if (choix==null){
             return participationService.commencer(idUser,idQuiz);
         }else {
             return participationService.verificationDesReponse(idUser,idQuiz,choix);
         }
-    }
-
-    @GetMapping("/commencer")
-    private HashMap<String,String> jouer(@RequestParam("username") String username, @RequestParam("titre") String titre){
-        return participationService.resultat(username,titre);
     }
 
 }

@@ -5,5 +5,6 @@ import com.APIQuiz.QuizAPI.entites.Reponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ReponseRepository extends JpaRepository<Reponse,Long> {
-//    Reponse findBybonneReponse(String reponse);
+    Reponse findByTexte(String texte);
+    Reponse findByIdReponse(Long idReponse);
 }

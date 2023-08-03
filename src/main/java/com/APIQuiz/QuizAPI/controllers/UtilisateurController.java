@@ -1,14 +1,9 @@
 package com.APIQuiz.QuizAPI.controllers;
 
-import com.APIQuiz.QuizAPI.Erreur.MessageErreur;
-import com.APIQuiz.QuizAPI.Erreur.UserNotFoundException;
 import com.APIQuiz.QuizAPI.entites.Utilisateur;
 import com.APIQuiz.QuizAPI.services.IUtilisateurService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,14 +17,8 @@ public class UtilisateurController {
 
 //    endpoint: Inscrire Utilisateur
     @PostMapping("/ajouter")
-    private ResponseEntity inscrire(@Valid @RequestBody Utilisateur utilisateur){
-        try {
-            utilisateurService.inscrire(utilisateur);
-            return ResponseEntity.status(HttpStatus.CREATED).body(utilisateur);
-        }catch (UserNotFoundException exception){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageErreur("Utilisateur existe deja","Changer d'information"));
-        }
-
+    private Utilisateur inscrire(@Valid @RequestBody Utilisateur utilisateur){
+          return utilisateurService.inscrire(utilisateur);
     }
 
 //    endpoint: connecter Utilisateur
@@ -40,13 +29,13 @@ public class UtilisateurController {
 
     }
 
-//    endpoint: afficher toute la liste
+//    endpoint: afficher toute la liste de Utilisateur
     @GetMapping("/listeAll")
     private List<Utilisateur> list(){
         return utilisateurService.afficher();
     }
 
-//    enpoint: afficher liste par id
+//    enpoint: lire un Utilisateur
     @GetMapping("/listeId")
     private Utilisateur userAllList(@RequestParam Long idUser) {
            return utilisateurService.lire(idUser);

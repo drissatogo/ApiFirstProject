@@ -9,16 +9,29 @@ import java.util.List;
 
 
 public interface IReponseService {
-        Reponse getReponseById (Long idReponse);
-
-        Reponse creerReponse(Reponse reponse);
+        List<Reponse> afficher();      //  afficher tous les reponses
+        Reponse ajouter(Reponse reponse);      // enregistrer une reponse
 
         Reponse modifierReponse(Long idReponse, String text, int point, String status);
 
         Reponse modifierUnElemntReponse(Long idReponse,Reponse reponse);
 
-        void supprimerReponse(Long id);
+        void supprimer(Long idReponse);    // suppression de reponse
 
         List<Reponse> afficherLesReponses(); //afficher une Reponse
 
-    }
+        Reponse afficher(Long idReponse);
+}
+
+/*
+import java.util.List;
+
+public interface IReponseService {
+
+    Reponse ajouter(Reponse reponse);      // enregistrer une reponse
+    List<Reponse> afficher();      //  afficher tous les reponses
+    Reponse lire(Long idReponse);     //  lire une reponse
+    void supprimer(Long idReponse);    // suppression de reponse
+    Reponse modifier(Reponse reponse);       //  modification de reponse
+}
+*/

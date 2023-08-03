@@ -5,9 +5,9 @@ import com.APIQuiz.QuizAPI.entites.Quiz;
 import java.util.List;
 
 public interface IQuizService {
-    Quiz ajouter(Quiz quiz);      // inscription de quiz
-    List<Quiz> listeQuiz();      //  liste complet de quiz
-    Quiz afficherParId(Long idQuiz);     //  recuperer user par  id
+    Quiz ajouter(Quiz quiz);      // enregistrer un quiz
+    List<Quiz> listeQuiz();      //  afficher tous les quiz
+    Quiz lire(Long idQuiz);     //  lire un quiz
     void supprimer(Long idQuiz);    // suppression de quiz
-    Quiz modifier(Quiz quiz);       //  modifier
+    Quiz modifier(Quiz quiz);       //  modifier de quiz
 }

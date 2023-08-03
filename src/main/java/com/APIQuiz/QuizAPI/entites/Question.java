@@ -32,8 +32,8 @@ public class Question {
     @ManyToOne
     private Quiz quizQuestion;
 
-    @OneToMany(mappedBy = "questionReponse",orphanRemoval = true)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "questionReponse")
+//    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<Reponse> reponseQuestion;
 
 }

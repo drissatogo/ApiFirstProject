@@ -18,10 +18,10 @@ public class Reponse {
 
     @Column(name = "texte")
     @NotNull(message = "Remplissez les champs vides")
-    @Size(max = 100, message = "Texte trop long")
+    @Size(max = 255, message = "Texte trop long")
     private String texte;
 
-    @Column(name = "status")
+    @Column(name = "bonneReponse")
     @NotNull(message = "Remplissez les champs vides")
     @Size(max = 50, message = "Texte trop long")
     private String bonneReponse;
@@ -32,9 +32,11 @@ public class Reponse {
     private int point;
 
     @ManyToOne
+    @JsonIgnore
     private Utilisateur utilisateurReponse;
 
     @ManyToOne
     @JsonIgnoreProperties(value = {"utilisateurQuestion"})
+    @JsonIgnore
     private Question questionReponse;
 }
